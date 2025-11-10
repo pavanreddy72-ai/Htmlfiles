@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>document</title>
+        <link rel="stylesheet" href="./style2.css">
+        <style>
+            body{
+                font-family:Arial, Helvetica, sans-serif;
+                padding:20px;
+            }
+            box{
+                width:100px;
+                height:100px;
+                background-color:rgb(60,194,53);
+                margin-top:20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="box" style="width:113px"></div>
+        <h2 class="hardtext">this is heading</h2>
+        <form id="form" method="post">
+            <input type="text" placeholder="enter your name">
+            <input type="email" placeholder="enter yout email">
+            <input type="password" placeholder="enter your password">
+            <button type="submit">submit</button>
+        </form>
+        <script>
+           
+           
+           document.name
+           docoment.getelementbyid()
+           let box=document.getelementbyid('box');
+           let form=document.getelementbyid('form');
+           let heading=document.queryseelector('h2');
+
+           
+        heading.addeventlistner("mouseout",()=>{
+            heading.style.color="red";
+            heading.style.fontsize="2em";
+            heading.style.transform='scale'(1.1);
+
+        })
+        box.addeventlistner("moustleave",()=>{
+            box.style.backgroundcolor="blue";
+            box.textcontent="box is clicked";
+            box.style.borderradius="5px";
+            box.style.border="2px solid black";
+
+        });
+        //callback function is called after an event occurs
+        form.addeventlistener('submit',(event)=>{
+            event.preventdefault();
+            alert("form submitted")
+        })
+        </script>
+    </body>
+</html>
