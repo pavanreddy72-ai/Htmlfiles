@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flexbox Demo</title>
+  <style>
+       .flex-container{
+        display: flex;
+        height: 90vh;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+      .item{
+        border: 2px solid rebeccapurple;
+      }
+      .item:nth-child(2){
+        flex-basis: 400px;
+        flex-shrink: 1;
+      } 
+
+
+
+      .item{
+        border: 2px solid red;
+        padding: 12px;
+        margin: 12px;
+       
+      }
+      .flex-container{
+
+        border: 2px solid orange;
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .item3{
+        flex-grow: 3;
+
+      }
+      .item1{
+        flex-grow: 2;
+      }
+
+  
+  </style>
+</head>
+<body>
+
+  <h1>Flexbox Layout Demo</h1>
+
+  <!-- Flex Container -->
+  <div class="flex-container">
+    <div class="item item1">Item 1</div>
+    <div class="item ">Item 2</div>
+    <div class="item item3">Item 3</div>
+    <div class="item">Item 4</div> 
+    <div class="item">Item 5</div>
+  </div>
+
+</body>
+</html>

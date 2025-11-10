@@ -1,0 +1,3 @@
+
+a="hrfuihvurfvhrhvrhvrhv "
+print(a)

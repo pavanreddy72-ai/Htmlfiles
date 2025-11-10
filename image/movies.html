@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>MyFlix - Multi-language Demo</title>
+  <style>
+    /* (Same CSS as before for brevity, you can reuse) */
+    * {
+      box-sizing: border-box;
+      margin: 0; padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      background: #000;
+      padding: 15px 30px;
+      align-items: center;
+    }
+    .logo {
+      color: red;
+      font-weight: bold;
+      font-size: 24px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+    nav ul li a, nav ul li select {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    nav ul li a:hover {
+      color: red;
+    }
+    select {
+      background-color: #000;
+      border: 1px solid #444;
+      color: white;
+      padding: 5px 10px;
+    }
+    .hero {
+      height: 400px;
+      background: url('https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      padding-left: 50px;
+      position: relative;
+    }
+    .hero-text {
+      background: rgba(0,0,0,0.7);
+      padding: 30px;
+      max-width: 500px;
+      border-radius: 8px;
+    }
+    .hero-text h1 {
+      font-size: 42px;
+      margin-bottom: 15px;
+    }
+    .hero-text p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    button {
+      background: red;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 15px;
+    }
+    button.secondary {
+      background: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+    .movie-section {
+      padding: 40px 50px;
+    }
+    .movie-section h2 {
+      margin-bottom: 25px;
+    }
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+      gap: 20px;
+    }
+    .movie img {
+      width: 100%;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .movie img:hover {
+      transform: scale(1.05);
+    }
+    .video-player {
+      display: none;
+      justify-content: center;
+      margin: 40px 0;
+    }
+    .video-player video {
+      max-width: 90%;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,0,0,0.7);
+    }
+  </style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">MyFlix</div>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">TV Shows</a></li>
+      <li><a href="#">Movies</a></li>
+      <li><a href="#">My List</a></li>
+      <li>
+        <select id="languageSelect" aria-label="Select Language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+        </select>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<section class="hero" aria-label="Featured movie">
+  <div class="hero-text">
+    <h1 id="movieTitle">Plan 9 from Outer Space</h1>
+    <p id="movieDescription">Enjoy this classic free public domain sci-fi movie.</p>
+    <button id="playBtn">Play</button>
+    <button class="secondary" id="moreInfoBtn">More Info</button>
+  </div>
+</section>
+
+<div class="video-player" id="videoPlayer">
+  <video controls id="videoElement" tabindex="0">
+    <source src="https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.mp4" type="video/mp4" />
+    Sorry, your browser does not support the video tag.
+  </video>
+</div>
+
+<section class="movie-section" aria-label="Other movies">
+  <h2 id="popularMoviesTitle">Popular Movies</h2>
+  <div class="movie-grid" role="list">
+    <div class="movie" tabindex="0" role="listitem">
+      <img src="https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.jpg" alt="Plan 9 from Outer Space poster" onclick="playVideo('plan9')" />
+    </div>
+    <div class="movie" tabindex="0" role="listitem">
+      <img src="https://archive.org/download/Charade_1963/Charade_poster.jpg" alt="Charade poster" onclick="playVideo('charade')" />
+    </div>
+    <div class="movie" tabindex="0" role="listitem">
+      <img src="https://archive.org/download/Night_of_the_Living_Dead_1968/Night_of_the_Living_Dead_poster.jpg" alt="Night of the Living Dead poster" onclick="playVideo('night')" />
+    </div>
+    <div class="movie" tabindex="0" role="listitem">
+      <img src="https://archive.org/download/The_Great_Dictator_1940/The_Great_Dictator_poster.jpg" alt="The Great Dictator poster" onclick="playVideo('dictator')" />
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p style="padding: 20px; text-align: center;">&copy; 2025 MyFlix. All rights reserved.</p>
+</footer>
+
+<script>
+  const content = {
+    en: {
+      movieTitle: "Plan 9 from Outer Space",
+      movieDescription: "Enjoy this classic free public domain sci-fi movie.",
+      moreInfoURL: "https://archive.org/details/Plan_9_from_Outer_Space",
+      popularMoviesTitle: "Popular Movies",
+      videos: {
+        plan9: "https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.mp4",
+        charade: "https://archive.org/download/Charade_1963/Charade_512kb.mp4",
+        night: "https://archive.org/download/Night_of_the_Living_Dead_1968/Night_of_the_Living_Dead_512kb.mp4",
+        dictator: "https://archive.org/download/The_Great_Dictator_1940/The_Great_Dictator_1940_512kb.mp4"
+      }
+    },
+    es: {
+      movieTitle: "Plan 9 del Espacio Exterior",
+      movieDescription: "Disfruta de esta clásica película de ciencia ficción de dominio público.",
+      moreInfoURL: "https://archive.org/details/Plan_9_from_Outer_Space",
+      popularMoviesTitle: "Películas Populares",
+      videos: {
+        plan9: "https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.mp4",
+        charade: "https://archive.org/download/Charade_1963/Charade_512kb.mp4",
+        night: "https://archive.org/download/Night_of_the_Living_Dead_1968/Night_of_the_Living_Dead_512kb.mp4",
+        dictator: "https://archive.org/download/The_Great_Dictator_1940/The_Great_Dictator_1940_512kb.mp4"
+      }
+    },
+    fr: {
+      movieTitle: "Plan 9 de l'Espace Extra-atmosphérique",
+      movieDescription: "Profitez de ce classique de science-fiction du domaine public.",
+      moreInfoURL: "https://archive.org/details/Plan_9_from_Outer_Space",
+      popularMoviesTitle: "Films Populaires",
+      videos: {
+        plan9: "https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.mp4",
+        charade: "https://archive.org/download/Charade_1963/Charade_512kb.mp4",
+        night: "https://archive.org/download/Night_of_the_Living_Dead_1968/Night_of_the_Living_Dead_512kb.mp4",
+        dictator: "https://archive.org/download/The_Great_Dictator_1940/The_Great_Dictator_1940_512kb.mp4"
+      }
+    }
+  };
+
+  const languageSelect = document.getElementById('languageSelect');
+  const movieTitle = document.getElementById('movieTitle');
+  const movieDescription = document.getElementById('movieDescription');
+  const moreInfoBtn = document.getElementById('moreInfoBtn');
+  const popularMoviesTitle = document.getElementById('popularMoviesTitle');
+  const playBtn = document.getElementById('playBtn');
+  const videoPlayer = document.getElementById('videoPlayer');
+  const videoElement = document.getElementById('videoElement');
+
+  // Track which movie is currently featured
+  let currentMovieKey = 'plan9';
+
+  function updateContent(lang) {
+    movieTitle.textContent = content[lang].movieTitle;
+    movieDescription.textContent = content[lang].movieDescription;
+    moreInfoBtn.onclick = () => window.open(content[lang].moreInfoURL, '_blank');
+    popularMoviesTitle.textContent = content[lang].popularMoviesTitle;
+
+    // Update hero background image depending on featured movie
+    const backgrounds = {
+      plan9: 'https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.jpg',
+      charade: 'https://archive.org/download/Charade_1963/Charade_poster.jpg',
+      night: 'https://archive.org/download/Night_of_the_Living_Dead_1968/Night_of_the_Living_Dead_poster.jpg',
+      dictator: 'https://archive.org/download/The_Great_Dictator_1940/The_Great_Dictator_poster.jpg'
+    };
+    document.querySelector('.hero').style.backgroundImage = `url('${backgrounds[currentMovieKey]}')`;
+
+    // Update video src if video is playing
+    if (!videoPlayer.style.display || videoPlayer.style.display === 'none') return;
+    videoElement.src = content[lang].videos[currentMovieKey];
+    videoElement.load();
+    videoElement.play();
+  }
+
+  languageSelect.addEventListener('change', () => {
+    updateContent(languageSelect.value);
+  });
+
+  playBtn.addEventListener('click', () => {
+    videoPlayer.style.display = 'flex';
+    videoElement.src = content[languageSelect.value].videos[currentMovieKey];
+    videoElement.load();
+    videoElement.play();
+    videoPlayer.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  function playVideo(movieKey) {
+    currentMovieKey = movieKey;
+
+    // Update hero title & desc for clicked movie (simplified to default English here)
+    const titles = {
+      plan9: {
+        en: "Plan 9 from Outer Space",
+        es: "Plan 9 del Espacio Exterior",
+        fr: "Plan 9 de l'Espace Extra-atmosphérique"
+      },
+      charade: {
+        en: "Charade",
+        es: "Charada",
+        fr: "Charade"
+      },
+      night: {
+        en: "Night of the Living Dead",
+        es: "La noche de los muertos vivientes",
+        fr: "La Nuit des morts-vivants"
+      },
+      dictator: {
+        en: "The Great Dictator",
+        es: "El Gran Dictador",
+        fr: "Le Dictateur"
+      }
+    };
+
+    const descriptions = {
+      plan9: {
+        en: "Enjoy this classic free public domain sci-fi movie.",
+        es: "Disfruta de esta clásica película de ciencia ficción de dominio público.",
+        fr: "Profitez de ce classique de science-fiction du domaine public."
+      },
+      charade: {
+        en: "A thrilling mystery starring Audrey Hepburn and Cary Grant.",
+        es: "Un misterio emocionante protagonizado por Audrey Hepburn y Cary Grant.",
+        fr: "Un mystère passionnant avec Audrey Hepburn et Cary Grant."
+      },
+      night: {
+        en: "A classic horror film about a zombie outbreak.",
+        es: "Un clásico del cine de terror sobre un brote zombi.",
+        fr: "Un film d'horreur classique sur une épidémie de zombies."
+      },
+      dictator: {
+        en: "Charlie Chaplin's brilliant political satire.",
+        es: "La brillante sátira política de Charlie Chaplin.",
+        fr: "La brillante satire politique de Charlie Chaplin."
+      }
+    };
+
+    movieTitle.textContent = titles[ movieKey ][ languageSelect.value ];
+    movieDescription.textContent = descriptions[ movieKey ][ languageSelect.value ];
+
+    // Update hero background
+    const backgrounds = {
+      plan9: 'https://archive.org/download/Plan_9_from_Outer_Space/Plan_9_from_Outer_Space_512kb.jpg',
+      charade: 'https://archive.org/download/Charade_1963/Charade_poster.jpg',
+      night: 'https://archive.org/download/Night_of_the_Living_Dead_1968/Night_of_the_Living_Dead_poster.jpg',
+      dictator: 'https://archive.org/download/The_Great_Dictator_1940/The_Great_Dictator_poster.jpg'
+    };
+    document.querySelector('.hero').style.backgroundImage = `url('${backgrounds[movieKey]}')`;
+
+    videoPlayer.style.display = 'flex';
+    videoElement.src = content[languageSelect.value].videos[movieKey];
+    videoElement.load();
+    videoElement.play();
+    videoPlayer.scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>

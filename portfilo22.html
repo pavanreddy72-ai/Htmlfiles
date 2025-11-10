@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+
+
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            background: #070707;
+            color: #fff;
+        }
+
+        .button-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 200px;
+            height: 100vh;
+            background: #000;
+            border-right: 2px solid #1b6dbf;
+            padding: 100px 12px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            display: block;
+            padding: 10px 14px;
+            background: #06080a;
+            color: #f3f4f5;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+
+        .btn i {
+            margin-right: 8px;
+            color: aqua;
+        }
+
+        .btn:hover {
+            color: cadetblue;
+        }
+
+        .content {
+            margin-left: 200px;
+            width: calc(100% - 200px);
+        }
+
+        section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 40px;
+            align-items: flex-start;
+        }
+
+        section h1 {
+            color:aquamarine;
+            font-size: 36px;
+            margin-bottom: 0px;
+            text-align: left;
+            padding: 10px;
+        }
+
+
+        section p {
+            max-width: 700px;
+            color: #ddd;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        .image img {
+            max-width: 100px;
+            height: 50px;
+            border-radius: 10px;
+
+        }
+
+        section#home {
+            position: relative;
+            height: 100vh;
+        }
+
+        section#home img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        
+        .overlay-text {
+            position: absolute;
+            bottom:19%;
+            left: 23%;
+            transform: translate(-50%);
+            color: black;
+            text-align: flex-start;
+        }
+
+
+        .typing {
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 4px solid aliceblue;
+            animation: typing 3s steps(20) forwards, blink 0.5s step-end infinite alternate;
+            font-size: 50px;
+            margin: 0;
+            color: #000;
+        }
+
+
+        .typing.delay {
+            animation: typing 4s steps(30) 1s forwards, blink 0.5s step-end infinite alternate;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+
+            100% {
+                border-color: aqua;
+            }
+        }
+    </style>
+</head>
+
+<body></body>
+<nav class="button-container">
+    <a class="btn" href="#home"><i class="fa-solid fa-house"></i>Home</a>
+    <a class="btn" href="#about"><i class="fa-solid fa-circle-user"></i>About</a>
+    <a class="btn" href="#project"><i class="fa-solid fa-sheet-plastic"></i>Projects</a>
+    <a class="btn" href="#contact"><i class="fa-solid fa-user"></i>Contact</a>
+    <a class="btn" href="#resume"><i class="fa-solid fa-file"></i>Resume</a>
+</nav>
+<main class="content">
+    <section id="home">
+        <div class="overlay-text">
+            <h1 class="typing">pavan reddy</h1>
+            <p class="typing delay">Software Developer</p>
+        </div>
+        <img src="WhatsApp Image 2025-09-27 at 18.36.09_7a7e646ff8.jpg">
+    </section>
+
+    <section id="about">
+        <h1>About Me</h1>
+        <p>my self pavan reddy i am an hardworking person i will give hundread percent in every thing, im passinote
+            learn new thing.</p>
+    </section>
+
+    <section id="project">
+        <h1>Projects</h1>
+    </section>
+
+    <section id="contact">
+        <h1>Contact</h1>
+        <p><i class="fa-solid fa-phone"></i> contact.7013163006
+            <i class="fa-solid fa-envelope"></i>email.pavankevin72@gmail.com
+        </p>
+    </section>
+
+    <section id="resume">
+        <h1>Resume</h1>
+        <p>Link or display your resume here.</p>
+    </section>
+</main>
+
+</body>
+
+</html>

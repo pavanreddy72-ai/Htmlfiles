@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pavan Reddy | Portfolio</title>
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    /* 🌙 General */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #060606;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* 📍 Sidebar Navigation */
+    nav.button-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      background: linear-gradient(180deg, #000, #0a0a2a);
+      border-right: 2px solid #1b6dbf;
+      padding: 100px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      z-index: 10;
+    }
+
+    .btn {
+      padding: 12px 16px;
+      background: #090909;
+      color: #f3f4f5;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.3s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn i {
+      color: aqua;
+      font-size: 17px;
+    }
+
+    .btn:hover {
+      background: #0a0a2a;
+      box-shadow: 0 0 12px aqua;
+      border-color: aqua;
+      transform: scale(1.05);
+      color: aqua;
+    }
+
+    /* 🧭 Main Content */
+    .content {
+      margin-left: 200px;
+      width: calc(100% - 200px);
+    }
+
+    section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 80px;
+      transition: 0.6s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    section.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    section h1 {
+      color: aqua;
+      font-size: 42px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    section p {
+      max-width: 750px;
+      color: #ccc;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* 🏠 Home Section */
+    #home {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #home img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(40%) blur(1px);
+    }
+
+    .overlay-text {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -40%);
+      text-align: center;
+      color: #fff;
+      z-index: 2;
+    }
+
+    .overlay-text h1 {
+      font-size: 60px;
+      color: aqua;
+      margin-bottom: 10px;
+    }
+
+    .overlay-text p {
+      font-size: 26px;
+      color: #e0e0e0;
+    }
+
+    /* ✨ Glow Animation */
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 5px aqua, 0 0 10px aqua;
+      }
+
+      50% {
+        text-shadow: 0 0 20px cyan, 0 0 30px cyan;
+      }
+
+      100% {
+        text-shadow: 0 0 5px aqua, 0 0 10px aqua;
+      }
+    }
+
+    .overlay-text h1,
+    .overlay-text p {
+      animation: glow 2s infinite alternate;
+    }
+
+    /* 📱 Responsive */
+    @media (max-width: 768px) {
+      nav.button-container {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        padding: 10px;
+        justify-content: space-around;
+        position: fixed;
+      }
+
+      .content {
+        margin-left: 0;
+        width: 100%;
+        padding-top: 70px;
+      }
+
+      section {
+        padding: 40px 20px;
+      }
+
+      .overlay-text h1 {
+        font-size: 36px;
+      }
+
+      .overlay-text p {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="button-container">
+    <a class="btn" href="#home"><i class="fa-solid fa-house"></i>Home</a>
+    <a class="btn" href="#about"><i class="fa-solid fa-circle-user"></i>About</a>
+    <a class="btn" href="#project"><i class="fa-solid fa-sheet-plastic"></i>Projects</a>
+    <a class="btn" href="#contact"><i class="fa-solid fa-user"></i>Contact</a>
+    <a class="btn" href="#resume"><i class="fa-solid fa-file"></i>Resume</a>
+  </nav>
+
+  <!-- Main -->
+  <main class="content">
+    <section id="home" class="active">
+      <img src="WhatsApp Image 2025-09-27 at 18.36.09_7a7e646ff8.jpg" alt="Portfolio Image" />
+      <div class="overlay-text">
+        <h1 id="typing-name"></h1>
+        <p id="typing-role"></p>
+      </div>
+    </section>
+
+    <section id="about">
+      <h1>About Me</h1>
+      <p>
+        My name is <b>Pavan Reddy</b>. I’m a passionate software developer who loves
+        learning new technologies and building creative, impactful solutions.
+        I believe in continuous growth and always giving 100% to every project I take on.
+      </p>
+    </section>
+
+    <section id="project">
+      <h1>Projects</h1>
+      <p>Coming soon — showcasing my best work here.</p>
+    </section>
+
+    <section id="contact">
+      <h1>Contact</h1>
+      <p>
+        <i class="fa-solid fa-phone"></i> 7013163006<br>
+        <i class="fa-solid fa-envelope"></i> pavankevin72@gmail.com
+      </p>
+    </section>
+
+    <section id="resume">
+      <h1>Resume</h1>
+      <p><a href="#" style="color:aqua;text-decoration:underline;">Click here to view my resume</a></p>
+    </section>
+  </main>
+
+  <script>
+    /* 🖋️ Typing Effect */
+    const nameText = "Pavan Reddy";
+    const roleText = "Software Developer";
+    const nameElem = document.getElementById("typing-name");
+    const roleElem = document.getElementById("typing-role");
+
+    let i = 0, j = 0;
+
+    function typeName() {
+      if (i < nameText.length) {
+        nameElem.textContent += nameText.charAt(i);
+        i++;
+        setTimeout(typeName, 100);
+      } else {
+        setTimeout(typeRole, 500);
+      }
+    }
+
+    function typeRole() {
+      if (j < roleText.length) {
+        roleElem.textContent += roleText.charAt(j);
+        j++;
+        setTimeout(typeRole, 80);
+      }
+    }
+
+    typeName();
+
+    /* 🪄 Scroll Reveal Animation */
+    const sections = document.querySelectorAll("section");
+
+    window.addEventListener("scroll", () => {
+      const trigger = window.innerHeight / 1.3;
+      sections.forEach(section => {
+        const top = section.getBoundingClientRect().top;
+        if (top < trigger) section.classList.add("active");
+      });
+    });
+  </script>
+</body>
+
+</html>

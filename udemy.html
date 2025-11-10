@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <title>Udemy</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .navbar {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 0 20px;
+      background-color: azure;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid #ccc;
+    }
+
+    .btn {
+      border: none;
+      background-color: azure;
+      color: #424242;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 8px 10px;
+      transition: background-color 0.2s, color 0.2s;
+    }
+
+    .btn:hover {
+      background-color: #b07ca8;
+      color: #000;
+      border-radius: 4px;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      border: 1px solid #aaa;
+      padding: 6px 12px;
+      border-radius: 20px;
+      background-color: white;
+      transition: background-color 0.3s ease;
+    }
+
+    
+    .search:focus-within {
+      background-color: #f3e8ff;
+      border-color: #b28dff;
+    }
+
+    .search i {
+      color: #888;
+      margin-right: 8px;
+    }
+
+    .inputsearch {
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 14px;
+      width: 200px;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .language-icon {
+      margin-right: 5px;
+      color: #555;
+    }
+    .quote-section {
+  position: relative;
+  width: 100%;
+  max-height: 600px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.quote-section img {
+  width: 100%;
+  height: auto;
+  filter: brightness(60%);
+}
+
+.quote-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.quote-text span {
+  display: block;
+  font-size: 1.2rem;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    
+    <div>
+      <img src="image/logo-udemy.svg" width="80px" alt="Udemy Logo" />
+    </div>
+
+   
+    <button class="btn">Explore</button>
+
+    
+    <div class="search">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input class="inputsearch" type="search" placeholder="Search for anything" />
+    </div>
+
+    
+    <button class="btn">Price</button>
+    <button class="btn">Udemy Business</button>
+    <button class="btn">Teach on Udemy</button>
+
+    
+    <button class="btn">
+      <span class="material-symbols-outlined">shopping_cart</span>
+    </button>
+
+    
+    <button class="btn">Login</button>
+    <button class="btn">Signup</button>
+
+    
+    <button class="btn">
+      <i class="fa-solid fa-globe language-icon"></i>
+      Language
+    </button>
+  </nav>
+  <div class="quote-section">
+  <img src="9c5a83b1-8586-40bc-a548-72542e2d3472.png" alt="Learning Image">
+  <div class="quote-text">
+    “Learning never exhausts the mind.”<br>
+    <span> Leonardo da Vinci</span>
+  </div>
+</div>
+
+</body>
+
+</html>

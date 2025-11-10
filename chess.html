@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Chess with AI (Stockfish)</title>
+  <style>
+    body { font-family: Arial; display:flex; justify-content:center; margin-top:20px; }
+    .chess-board { border-spacing: 0; border-collapse: collapse; }
+    .chess-board th { padding: .5em; }
+    .chess-board th + th { border-bottom: 1px solid #000; }
+    .chess-board th:first-child,
+    .chess-board td:last-child { border-right: 1px solid #000; }
+    .chess-board tr:last-child td { border-bottom: 1px solid; }
+    .chess-board th:empty { border: none; }
+    .chess-board td {
+      width: 60px; height: 60px;
+      text-align: center;
+      font-size: 38px;
+      line-height: 0;
+      cursor: pointer;
+      user-select: none;
+    }
+    .chess-board .light { background: #eee; }
+    .chess-board .dark { background: #999; }
+    td.selected { outline: 3px solid orange; }
+  </style>
+</head>
+<body>
+  <div>
+    <table id="board" class="chess-board">
+      <tbody id="boardBody"></tbody>
+    </table>
+    <p id="status">White to move.</p>
+  </div>
+
+  <!-- Stockfish engine -->
+  <script src="https://cdn.jsdelivr.net/npm/stockfish/stockfish.js"></script>
+
+  <script>
+    const PIECES = {
+      r: "♜", n: "♞", b: "♝", q: "♛", k: "♚", p: "♟",
+      R: "♖", N: "♘", B: "♗", Q: "♕", K: "♔", P: "♙"
+    };
+    const boardEl = document.getElementById('boardBody');
+    const statusEl = document.getElementById('status');
+
+    // Start position FEN (standard)
+    let boardFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+    let whiteToMove = true;
+    let selectedCell = null;
+    const engine = STOCKFISH();
+
+    // build table
+    function renderBoard() {
+      boardEl.innerHTML = "";
+      const rows = boardFEN.split('/');
+      for (let r = 0; r < 8; r++) {
+        const tr = document.createElement('tr');
+        const rank = 8 - r;
+        tr.appendChild(Object.assign(document.createElement('th'), { textContent: rank }));
+        let row = rows[r];
+        let file = 0;
+        for (let ch of row) {
+          if (Number(ch)) {
+            for (let i = 0; i < Number(ch); i++) {
+              const td = makeSquare(r, file++);
+              tr.appendChild(td);
+            }
+          } else {
+            const td = makeSquare(r, file++, PIECES[ch]);
+            td.dataset.piece = ch;
+            tr.appendChild(td);
+          }
+        }
+        boardEl.appendChild(tr);
+      }
+      const lettersRow = document.createElement('tr');
+      lettersRow.appendChild(document.createElement('th'));
+      for (let i = 0; i < 8; i++) {
+        const th = document.createElement('th');
+        th.textContent = String.fromCharCode(97 + i);
+        lettersRow.appendChild(th);
+      }
+      boardEl.appendChild(lettersRow);
+    }
+
+    function makeSquare(r, file, symbol = "") {
+      const td = document.createElement('td');
+      td.textContent = symbol;
+      const dark = (r + file) % 2;
+      td.className = dark ? "dark" : "light";
+      td.dataset.row = r;
+      td.dataset.col = file;
+      td.addEventListener('click', onSquareClick);
+      return td;
+    }
+
+    // FEN helpers
+    function fenToMatrix(fen) {
+      const rows = fen.split('/');
+      const board = [];
+      for (const row of rows) {
+        const cells = [];
+        for (const ch of row) {
+          if (Number(ch)) for (let i = 0; i < Number(ch); i++) cells.push('.');
+          else cells.push(ch);
+        }
+        board.push(cells);
+      }
+      return board;
+    }
+
+    function matrixToFEN(matrix) {
+      return matrix.map(row => {
+        let fenRow = "", empty = 0;
+        for (const cell of row) {
+          if (cell === '.') empty++;
+          else {
+            if (empty > 0) { fenRow += empty; empty = 0; }
+            fenRow += cell;
+          }
+        }
+        if (empty > 0) fenRow += empty;
+        return fenRow;
+      }).join('/');
+    }
+
+    // click handling
+    function onSquareClick(e) {
+      const td = e.target;
+      const piece = td.dataset.piece || "";
+      if (selectedCell) {
+        // attempt move
+        const from = selectedCell;
+        const to = td;
+        if (from === to) { from.classList.remove('selected'); selectedCell = null; return; }
+        makeMove(from, to);
+        from.classList.remove('selected');
+        selectedCell = null;
+      } else {
+        // select if piece belongs to side to move
+        if ((whiteToMove && piece === piece.toUpperCase()) || (!whiteToMove && piece === piece.toLowerCase())) {
+          td.classList.add('selected');
+          selectedCell = td;
+        }
+      }
+    }
+
+    function makeMove(from, to) {
+      const board = fenToMatrix(boardFEN);
+      const r1 = +from.dataset.row, c1 = +from.dataset.col;
+      const r2 = +to.dataset.row, c2 = +to.dataset.col;
+      const piece = board[r1][c1];
+      board[r1][c1] = '.';
+      board[r2][c2] = piece;
+      boardFEN = matrixToFEN(board);
+      whiteToMove = !whiteToMove;
+      renderBoard();
+      statusEl.textContent = whiteToMove ? "White to move." : "Black to move.";
+      if (!whiteToMove) requestAIMove(); // AI plays Black
+    }
+
+    // Stockfish AI move
+    function requestAIMove() {
+      const fenWithTurn = boardFEN + " " + (whiteToMove ? "w" : "b") + " - - 0 1";
+      engine.postMessage("position fen " + fenWithTurn);
+      engine.postMessage("go depth 10");
+
+      engine.onmessage = (e) => {
+        const msg = e.data;
+        if (msg.startsWith("bestmove")) {
+          const parts = msg.split(" ");
+          const move = parts[1];
+          if (move && move.length >= 4) {
+            applyEngineMove(move);
+          }
+        }
+      };
+    }
+
+    function applyEngineMove(move) {
+      // convert move like e2e4 to board indices
+      const c1 = move.charCodeAt(0) - 97;
+      const r1 = 8 - parseInt(move[1]);
+      const c2 = move.charCodeAt(2) - 97;
+      const r2 = 8 - parseInt(move[3]);
+      const board = fenToMatrix(boardFEN);
+      const piece = board[r1][c1];
+      board[r1][c1] = '.';
+      board[r2][c2] = piece;
+      boardFEN = matrixToFEN(board);
+      whiteToMove = !whiteToMove;
+      renderBoard();
+      statusEl.textContent = whiteToMove ? "White to move." : "Black to move.";
+    }
+
+    renderBoard();
+  </script>
+</body>
+</html>
+

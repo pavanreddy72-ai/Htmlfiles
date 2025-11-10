@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Chess with AI</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #333;
+    }
+
+    .chess-board {
+      border-spacing: 0;
+      border-collapse: collapse;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    }
+
+    .chess-board td {
+      width: 70px;
+      height: 70px;
+      text-align: center;
+      font-size: 48px;
+      cursor: pointer;
+    }
+
+    .light {
+      background: #f0d9b5;
+    }
+
+    .dark {
+      background: #b58863;
+    }
+
+    .selected {
+      outline: 3px solid yellow;
+    }
+  </style>
+</head>
+<body>
+  <table class="chess-board" id="board"></table>
+
+  <script>
+    const board = document.getElementById("board");
+    const initialPosition = [
+      ["♜", "♞", "♝", "♛", "♚", "♝", "♞", "♜"],
+      ["♟", "♟", "♟", "♟", "♟", "♟", "♟", "♟"],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["", "", "", "", "", "", "", ""],
+      ["♙", "♙", "♙", "♙", "♙", "♙", "♙", "♙"],
+      ["♖", "♘", "♗", "♕", "♔", "♗", "♘", "♖"]
+    ];
+
+    let selectedCell = null;
+    let turn = "white";
+
+    // Create board
+    function drawBoard() {
+      board.innerHTML = "";
+      for (let i = 0; i < 8; i++) {
+        const row = document.createElement("tr");
+        for (let j = 0; j < 8; j++) {
+          const cell = document.createElement("td");
+          cell.dataset.row = i;
+          cell.dataset.col = j;
+          cell.textContent = initialPosition[i][j];
+          cell.className = (i + j) % 2 === 0 ? "light" : "dark";
+          cell.addEventListener("click", handleClick);
+          row.appendChild(cell);
+        }
+        board.appendChild(row);
+      }
+    }
+
+    function handleClick(e) {
+      const cell = e.target;
+      const row = +cell.dataset.row;
+      const col = +cell.dataset.col;
+      const piece = initialPosition[row][col];
+
+      if (selectedCell) {
+        movePiece(selectedCell, { row, col });
+        selectedCell.classList.remove("selected");
+        selectedCell = null;
+      } else if (piece && isWhite(piece) && turn === "white") {
+        selectedCell = cell;
+        cell.classList.add("selected");
+      }
+    }
+
+    function movePiece(fromCell, to) {
+      const fromRow = +fromCell.dataset.row;
+      const fromCol = +fromCell.dataset.col;
+      const piece = initialPosition[fromRow][fromCol];
+      initialPosition[fromRow][fromCol] = "";
+      initialPosition[to.row][to.col] = piece;
+      drawBoard();
+      turn = "black";
+      setTimeout(aiMove, 600);
+    }
+
+    // Simple AI: picks a random black piece and moves it randomly
+    function aiMove() {
+      const moves = [];
+      for (let i = 0; i < 8; i++) {
+        for (let j = 0; j < 8; j++) {
+          const piece = initialPosition[i][j];
+          if (piece && isBlack(piece)) {
+            // generate random move within board
+            const di = Math.floor(Math.random() * 3) - 1;
+            const dj = Math.floor(Math.random() * 3) - 1;
+            const ni = i + di, nj = j + dj;
+            if (ni >= 0 && ni < 8 && nj >= 0 && nj < 8) {
+              moves.push({ from: [i, j], to: [ni, nj] });
+            }
+          }
+        }
+      }
+      if (moves.length) {
+        const move = moves[Math.floor(Math.random() * moves.length)];
+        const [fr, fc] = move.from;
+        const [tr, tc] = move.to;
+        const piece = initialPosition[fr][fc];
+        initialPosition[fr][fc] = "";
+        initialPosition[tr][tc] = piece;
+      }
+      drawBoard();
+      turn = "white";
+    }
+
+    function isWhite(piece) {
+      return "♙♖♘♗♕♔".includes(piece);
+    }
+
+    function isBlack(piece) {
+      return "♟♜♞♝♛♚".includes(piece);
+    }
+
+    drawBoard();
+  </script>
+</body>
+</html>

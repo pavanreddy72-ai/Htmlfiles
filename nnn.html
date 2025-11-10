@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pseudo-Classes & Pseudo-Elements Demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=menu" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+
+    section {
+      background: rgb(113, 227, 109);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      border-radius: 10px;
+      box-shadow: 5px 5px 10px black; 
+    }
+
+    /* --------- Pseudo-Classes --------- */
+
+    /* Unvisited link */
+    
+    a:link {
+      color: rgb(143, 129, 236);
+    } 
+
+    /* Visited link */
+    a:visited {
+      color: rgb(10, 3, 190);
+    }
+
+    /* When mouse hovers over the link */
+    a:hover {
+      color: green;
+      text-decoration: none;
+
+    }
+
+    /* While link is being clicked */
+    a:active {
+      color: blueviolet;
+      border-bottom: 2px solid greenyellow;
+    }
+
+    /* Input field when focused (selected by the user) */
+    input:focus {
+      border: 2px solid rgb(18, 35, 51);
+      border-radius: 5px;
+      outline: none;
+      box-shadow: 2px 4px 8px black;
+    } 
+
+    /* Input that is marked as required */
+    input:required {
+      border: 2px solid red;
+    }
+
+    /* Input that is not required (optional) */
+    input:optional {
+      border: 2px solid green;
+    } */
+
+    /* First list item in <ul> */
+    ul li:first-child {
+      color: rgb(243, 113, 159);
+      font-weight: bold;
+    } 
+
+    /* Last list item in <ul> */
+    ul li:last-child{
+      color:pink;
+      font-style:italic
+    }
+
+    /* Second list item (using nth-child) */
+     ul li:nth-child(2) {
+      color: rgb(211, 93, 117);
+    }
+    ul li:nth-child(4) {
+      color: rgb(102, 201, 169);
+    } */
+
+
+    /* --------- Pseudo-Elements --------- */
+
+    /* First letter of every <p> */
+    /* p::first-letter {
+      font-size: 2rem;
+      color: navy;
+    } */
+
+    /* First line of every <p> */
+    /* p::first-line {
+      background-color: #eef;
+      color: rebeccapurple;
+    } */
+
+    /* Adds content before every <h2> */
+    /* h2::before {
+      content: "🔹Before ";
+      color: darkorange;
+    
+    } */
+
+    /* Adds content after every <h2> */
+    /* h2::after {
+      content: " 🔸 After";
+      color: seagreen;
+    } */
+
+    /* Styling for highlighted/selected text */
+    /* ::selection {
+      background-color: yellow;
+      color: black;
+    } */
+
+    /* Placeholder text inside input fields */
+    /* input::placeholder {
+      color: rgb(85, 196, 84);
+      font-style: italic;
+    } */
+
+    /* Marker/bullet for list items */
+    /* ul li::marker {
+      color: rgb(25, 0, 255);
+      font-size: 1.5em;
+    } */
+
+  </style>
+</head>
+<body>
+
+  Content Delivery network
+
+  <h1>Pseudo-Classes & Pseudo-Elements</h1>
+
+  <!-- Section for pseudo-class examples -->
+  <section>
+    <h2>Pseudo-Classes (Examples)</h2>
+
+    <p><strong>Hover, click, and visit this link:</strong></p>
+    <a target="target" href="https://occ-0-2611-3662.1.nflxso.net/dnm/api/v6/Qs00mKCpRvrkl3HZAN5KwEL1kpE/AAAABTcUABAZlqQ1sVJnbdO1zKSB0u7gzJ9fZhEgnXjH1YDVoKPR3B9GhJ9BO2uLUNbOFTtGrmQ6VDb1PuNCG-kI6-W5p-K1sDN7b0INvIX78xCocL9SKVpDmCrRKb7a3XYulrqrzy0Jd8iujZO4TevKa3vTIhf2t_aygMw-bYr9WTMG-EGJgzNn-fqiB6sw-dhiOktnz-B-zSCBvZIf1LSrKX3aFLmwY9MHO6t35X4.jpg?r=6ca">  visitme </a>
+    <!-- Required input triggers :required -->
+    <input type="text" placeholder="Required field" required><br><br>
+    <!-- Optional input triggers :optional -->
+    <input type="email" placeholder="Optional field"><br><br>
+
+    <p><strong>List Example with :first-child, :last-child, :nth-child():</strong></p>
+    <ul>
+      <span class="material-symbols-outlined">
+menu
+</span>
+      <li>First item (styled with :first-child)</li>
+      <li>Second item (styled with :nth-child(2))</li>
+      <li>Third item (styled with :nth-child(3))</li>
+      <li>Fourth item (styled with :nth-child(4))</li>
+      <li>Last item (styled with :last-child)</li>
+    </ul>
+  </section>
+
+  <!-- Section for pseudo-element examples -->
+  <section>
+    <h2>Pseudo-Elements (Examples)</h2>
+
+    <!-- First letter, first line, and text selection will be styled here -->
+    <p>
+      This is a paragraph with a <strong>large first letter</strong> and a <strong>highlighted first line</strong>.
+      Try selecting some text to see ::selection styling.
+    </p>
+  </section>
+
+</body>
+</html>

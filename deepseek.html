@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: #333;
+            min-height: 100vh;
+            padding-bottom: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Navigation Styles */
+        nav {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 0 0 15px 15px;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            font-weight: bold;
+            color: #0077b6;
+            display: flex;
+            align-items: center;
+            font-size: 1.2rem;
+        }
+
+        .logo img {
+            width: 35px;
+            height: 35px;
+            margin-right: 10px;
+        }
+
+        .btn {
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #0077b6;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #f1f1f1;
+        }
+
+        /* Side Panel Styles */
+        .side-panel {
+            width: 250px;
+            height: 100%;
+            background: white;
+            position: fixed;
+            top: 0;
+            padding: 20px;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: 0.4s;
+            z-index: 100;
+        }
+
+        .menu {
+            left: -250px;
+        }
+
+        .menu.show {
+            left: 0;
+        }
+
+        .settings {
+            right: -250px;
+        }
+
+        .settings.show {
+            right: 0;
+        }
+
+        .side-panel h3 {
+            margin: 40px 0 20px;
+            color: #0077b6;
+            border-bottom: 2px solid #0077b6;
+            padding-bottom: 10px;
+        }
+
+        .side-panel p {
+            padding: 12px 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .side-panel p:hover {
+            background: #f1f1f1;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 22px;
+            cursor: pointer;
+            color: #0077b6;
+        }
+
+        /* Main Content Styles */
+        main {
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.2rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .weather-card {
+            background: white;
+            display: inline-block;
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .location {
+            font-size: 1.5rem;
+            color: #0077b6;
+            margin-bottom: 15px;
+        }
+
+        .temperature {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .weather-details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .detail {
+            margin: 10px;
+            padding: 10px;
+            min-width: 120px;
+        }
+
+        .detail i {
+            font-size: 1.8rem;
+            color: #0077b6;
+            margin-bottom: 8px;
+        }
+
+        .map-container {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .weather-details {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .detail {
+                width: 100%;
+                max-width: 200px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <button class="btn" id="menuBtn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="logo">
+                <img src="https://cdn-icons-png.flaticon.com/512/1116/1116453.png" alt="Logo">
+                <span>Weather App</span>
+            </div>
+            <button class="btn" id="settingsBtn">
+                <i class="fa-solid fa-gear"></i>
+            </button>
+        </nav>
+
+        <!-- Menu Panel -->
+        <div class="side-panel menu" id="menu">
+            <span class="close-btn" id="closeMenu">
+                <i class="fa-solid fa-times"></i>
+            </span>
+            <h3>Menu</h3>
+            <p><i class="fa-solid fa-house"></i> Home</p>
+            <p><i class="fa-solid fa-cloud-sun"></i> Weather</p>
+            <p><i class="fa-solid fa-location-dot"></i> Location</p>
+            <p><i class="fa-solid fa-clock-rotate-left"></i> History</p>
+            <p><i class="fa-solid fa-circle-info"></i> About</p>
+        </div>
+
+        <!-- Settings Panel -->
+        <div class="side-panel settings" id="settings">
+            <span class="close-btn" id="closeSettings">
+                <i class="fa-solid fa-times"></i>
+            </span>
+            <h3>Settings</h3>
+            <p><i class="fa-solid fa-bell"></i> Notifications</p>
+            <p><i class="fa-solid fa-temperature-half"></i> Units: Celsius</p>
+            <p><i class="fa-solid fa-palette"></i> Theme: Light</p>
+            <p><i class="fa-solid fa-language"></i> Language: English</p>
+            <p><i class="fa-solid fa-download"></i> Update Data</p>
+        </div>
+
+        <main>
+            <h1>Current Weather</h1>
+            
+            <div class="weather-card">
+                <div class="location">
+                    <i class="fa-solid fa-location-dot"></i> Hyderabad, India
+                </div>
+                <div class="temperature">28°C</div>
+                <div class="weather-condition">Partly Cloudy</div>
+                
+                <div class="weather-details">
+                    <div class="detail">
+                        <i class="fa-solid fa-wind"></i>
+                        <div>Wind</div>
+                        <div class="value">12 km/h</div>
+                    </div>
+                    <div class="detail">
+                        <i class="fa-solid fa-droplet"></i>
+                        <div>Humidity</div>
+                        <div class="value">65%</div>
+                    </div>
+                    <div class="detail">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <div>Pressure</div>
+                        <div class="value">1012 hPa</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="map-container">
+                <h3>Weather Map</h3>
+                <iframe
+                    src="https://embed.windy.com/embed2.html?lat=17.38&lon=78.48&zoom=5&level=surface&overlay=rain"
+                    loading="lazy">
+                </iframe>
+            </div>
+        </main>
+
+        <footer>
+            <p>© 2023 Simple Weather App | Designed for Learning</p>
+        </footer>
+    </div>
+
+    <script>
+        // Get all the elements we need
+        const menuBtn = document.getElementById("menuBtn");
+        const settingsBtn = document.getElementById("settingsBtn");
+        const closeMenu = document.getElementById("closeMenu");
+        const closeSettings = document.getElementById("closeSettings");
+        const menu = document.getElementById("menu");
+        const settings = document.getElementById("settings");
+
+        // Function to open the menu
+        function openMenu() {
+            menu.classList.add("show");
+        }
+
+        // Function to close the menu
+        function closeMenuPanel() {
+            menu.classList.remove("show");
+        }
+
+        // Function to open the settings
+        function openSettings() {
+            settings.classList.add("show");
+        }
+
+        // Function to close the settings
+        function closeSettingsPanel() {
+            settings.classList.remove("show");
+        }
+
+        // Add event listeners to buttons
+        menuBtn.addEventListener("click", openMenu);
+        closeMenu.addEventListener("click", closeMenuPanel);
+        
+        settingsBtn.addEventListener("click", openSettings);
+        closeSettings.addEventListener("click", closeSettingsPanel);
+
+        // Close panels when clicking outside (optional enhancement)
+        document.addEventListener("click", function(event) {
+            // If click is outside menu and not on menu button, close menu
+            if (!menu.contains(event.target) && event.target !== menuBtn) {
+                closeMenuPanel();
+            }
+            
+            // If click is outside settings and not on settings button, close settings
+            if (!settings.contains(event.target) && event.target !== settingsBtn) {
+                closeSettingsPanel();
+            }
+        });
+
+        // Simple function to update weather (for demonstration)
+        function updateWeather() {
+            // In a real app, we would fetch data from an API
+            // For this example, we'll just update with sample data
+            const temperature = document.querySelector(".temperature");
+            const condition = document.querySelector(".weather-condition");
+            const wind = document.querySelector(".detail .value");
+            
+            // Simple animation to show updating
+            temperature.style.opacity = "0.5";
+            condition.style.opacity = "0.5";
+            
+            setTimeout(function() {
+                temperature.textContent = "30°C";
+                condition.textContent = "Sunny";
+                wind.textContent = "10 km/h";
+                
+                temperature.style.opacity = "1";
+                condition.style.opacity = "1";
+            }, 500);
+        }
+
+        // Update weather every 30 seconds (for demonstration)
+        setInterval(updateWeather, 30000);
+
+        // Add click effect to menu items
+        const menuItems = document.querySelectorAll(".side-panel p");
+        menuItems.forEach(item => {
+            item.addEventListener("click", function() {
+                // Simple feedback when clicking menu items
+                this.style.backgroundColor = "#e3f2fd";
+                setTimeout(() => {
+                    this.style.backgroundColor = "";
+                }, 300);
+                
+                // Close the panel after clicking (optional)
+                if (this.parentElement === menu) {
+                    closeMenuPanel();
+                } else {
+                    closeSettingsPanel();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

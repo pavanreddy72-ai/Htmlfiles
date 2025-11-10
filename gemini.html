@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Weather App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            overflow-x: hidden; /* Prevent horizontal overflow */
+        }
+
+        nav {
+            background-color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .logo {
+            font-weight: bold;
+            color: #0077b6;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 30px;
+            height: 30px;
+            margin-right: 8px;
+        }
+
+        .btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        /* Left Menu */
+        .menu {
+            width: 200px;
+            height: 100%;
+            background: white;
+            position: fixed;
+            top: 0;
+            left: -210px; /* hide fully including shadow */
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+            transition: left 0.3s ease-in-out;
+            z-index: 5;
+        }
+
+        .menu.show {
+            left: 0;
+        }
+
+        .menu h3 {
+            margin-top: 40px;
+            color: #0077b6;
+        }
+
+        /* Right Settings */
+        .settings {
+            width: 200px;
+            height: 100%;
+            background: white;
+            position: fixed;
+            top: 0;
+            right: -210px; /* hide fully including shadow */
+            padding: 20px;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease-in-out;
+            z-index: 5;
+        }
+
+        .settings.show {
+            right: 0;
+        }
+
+        main {
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        #weather {
+            background: white;
+            display: inline-block;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        #api-url {
+            font-size: small;
+            color: #666;
+            margin-top: 20px;
+            word-break: break-all;
+            display: block;
+            max-width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        iframe {
+            width: 90%;
+            height: 300px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <button class="btn" id="menuBtn"><i class="fa-solid fa-bars"></i></button>
+        <div class="logo">
+            <img src="https://cdn-icons-png.flaticon.com/512/1116/1116453.png" alt="Logo">
+            <span>Weather App</span>
+        </div>
+        <button class="btn" id="settingsBtn"><i class="fa-solid fa-gear"></i></button>
+    </nav>
+
+    <div class="menu" id="menu">
+        <h3>Menu</h3>
+        <p>🏠 Home</p>
+        <p>🌤️ Weather</p>
+        <p>📍 Location</p>
+    </div>
+
+    <div class="settings" id="settings">
+        <h3>Settings</h3>
+        <p>🔔 Notifications</p>
+        <p>🌡️ Units: Celsius</p>
+        <p>🎨 Theme: Light</p>
+    </div>
+
+    <main>
+        <h2>Current Weather</h2>
+        <div id="weather">Loading...</div>
+
+        <span id="api-url"></span>
+
+        <iframe
+            src="https://embed.windy.com/embed2.html?lat=17.38&lon=78.48&zoom=5&level=surface&overlay=rain"
+            loading="lazy">
+        </iframe>
+    </main>
+
+    <script>
+        let menuBtn = document.getElementById("menuBtn");
+        let settingsBtn = document.getElementById("settingsBtn");
+        let menu = document.getElementById("menu");
+        let settings = document.getElementById("settings");
+
+        // Menu Button Handler
+        menuBtn.onclick = function () {
+            menu.classList.toggle("show");
+            settings.classList.remove("show");
+        };
+
+        // Settings Button Handler
+        settingsBtn.onclick = function () {
+            settings.classList.toggle("show");
+            menu.classList.remove("show");
+        };
+
+        async function loadWeather() {
+            let url = "https://api.open-meteo.com/v1/forecast?latitude=17.38&longitude=78.48&current_weather=true";
+
+            document.getElementById("api-url").innerHTML = "API URL: <a href='" + url + "' target='_blank'>" + url + "</a>";
+
+            try {
+                let response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                let data = await response.json();
+                let w = data.current_weather;
+
+                document.getElementById("weather").innerHTML =
+                    "🌡️ Temperature: " + w.temperature + "°C<br>" +
+                    "💨 Wind: " + w.windspeed + " km/h<br>" +
+                    "🧭 Direction: " + w.winddirection + "°<br>" +
+                    "⏰ Time: " + w.time;
+            } catch (error) {
+                document.getElementById("weather").innerHTML = "Error loading weather data. Please check the console for details.";
+                console.error("Could not fetch weather:", error);
+            }
+        }
+
+        loadWeather();
+    </script>
+
+</body>
+
+</html>

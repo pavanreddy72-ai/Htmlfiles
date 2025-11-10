@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combinators & Position Demo</title>
+    
+    <!-- External CSS (will be ignored here unless styledemo.css exists) -->
+    <link rel="stylesheet" href="/styledemo.css">
+
+    <!-- Internal CSS -->
+    <style>
+        /* Internal body background (overridden by inline) */
+        body {
+            background-color: rgb(215, 151, 231);
+        }
+
+        /* Class selector for first <p> tag */
+        .para1 {
+            border-width: 2px;
+            border-style: dashed;
+            border-color: rgb(130, 185, 236);
+        }
+
+        /* DESCENDANT COMBINATOR
+           Selects all <p> elements inside a <div>, no matter how deeply nested */
+    
+         /* div p {
+            color: rgb(136, 120, 223);
+        }  
+
+        /* CHILD COMBINATOR
+           Selects only immediate child <p> of <div>, skips nested ones */
+       
+         div > span {
+            color: rgb(206, 220, 18);
+        } 
+       
+
+        /* ADJACENT SIBLING COMBINATOR
+           Selects the first <p> immediately after an <h2> */
+        
+          /*h2 + p {
+            border: 1px solid rrgb(85, 208, 217);
+            color: blueviolet;
+            padding: 30pxpx;/*
+            
+        }  
+        
+
+        /* GENERAL SIBLING COMBINATOR
+           Selects all <p> siblings that come after an <h2> */
+        
+         h2 ~ p {
+            color: rgb(208, 108, 135);
+            
+        } 
+      
+        
+    </style>
+</head>
+<!-- Inline CSS: background color set to blue (overrides internal) -->
+<body style="background-color: rgba(53, 88, 96, 0.189);">
+    <div class="parent">
+        <span class="child">1</span><span class="child">2</span><span class="child">3</span><span class="child">4</span>
+        <p>
+            <span>5</span><span>6</span><span>7</span><span>8</span>
+        </p>
+    </div>
+    <div>
+        <!-- h2 heading with inline border and color -->
+        <h2 >This is heading</h2>
+        <p>This is first  p tag (child of div)</p>
+        <p>This is another p tag (child of div)</p>
+        <p>This is another p tag (child of div)</p>
+        <p>This is another p tag (child of div)</p>
+        <p>This is another p tag (child of div)</p>
+        <!-- First <p> tag: has class and id, directly after <h2> -->
+        <p class="para1" id="para2">This is immediate child (and adjacent sibling of h2)</p>
+        
+        <!-- Repeating structure of <h1> followed by <p> -->
+        <h1>This is first heading</h1>
+        <p>This is another p tag (child of div)</p>
+        <p>This is another p tag (child of div)</p>
+        <p>This is another p tag (child of div)</p>
+        <p>This is another p tag (child of div)</p>
+
+        <h1>This is first heading</h1>
+        <p>This is another p tag (child of div)</p>
+
+        <h1>This is first heading</h1>
+        <p>This is another p tag (child of div)</p>
+
+        <h1>This is first heading</h1>
+        <section>
+            <p>ASDFASDFKJHASJKDFH</p>
+        </section>
+        <p>This is another p tag (child of div)</p>
+
+        <!-- Nested structure: section inside div, and a <p> inside section -->
+        <section>
+            <p>This is a grandchild (descendant but not direct child of div)</p>
+        </section>
+    </div>
+</body>
+</html>

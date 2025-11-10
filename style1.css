@@ -1,0 +1,15 @@
+.navbar{
+    border:2px solid pink;
+    position:relative;
+
+    
+}
+.btn{
+    position:absolute;
+    display:flex;
+    align-items: center;
+    top:50%;
+    left:50%;
+
+
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>portfilo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 150vh;
+            font-family: Arial, sans-serif;
+            scroll-behavior: smooth;
+            background-color: silver;
+            color: white;
+
+        }
+
+        body {
+            background-color: rgba(7, 7, 7, 0.947);
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+
+        .button-container {
+            height: 110vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding: 230px 20px 20px 10px;
+            gap: 10px;
+            border-right: 2px solid #1b6dbf;
+            width: 200px;
+            background-color: black;
+
+        }
+
+        .btn {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: rgb(6, 8, 10);
+            color: rgb(243, 244, 245);
+            border: none;
+            outline: none;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+            text-align: left;
+        }
+
+        .btn i {
+            margin-right: 8px;
+            color: aqua;
+        }
+
+        .btn:hover {
+            color: cadetblue;
+        }
+
+        .image {
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .image img {
+            width: 100px;
+            height: 100px;
+        } 
+
+        .content {
+            margin-left: 200px;
+            width: calc(100% - 200px);
+        }
+        .section{
+            height:100vh;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border-bottom: 1px solid black;
+            text-align: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button-container">
+        <a class="btn" href="#home"> <i class="fa-solid fa-house"></i>Home</a>
+        <a class="btn" href="#contact"><i class="fa-solid fa-user"></i>Contact</a>
+        <a class="btn" href="#project"> <i class="fa-solid fa-sheet-plastic"></i>Project</a>
+        <a class="btn" href="#about"><i class="fa-solid fa-circle-user"></i>About</a>
+        <a class="btn" href="#resume"><i class="fa-solid fa-file"></i>resume</a>
+    </div>
+    <div class="content">
+        <div>
+        <section id="home">
+            <img src="WhatsApp Image 2025-09-27 at 18.36.09_7a7e646ff8.jpg">
+        </div>
+        </section>
+        <section id="about">
+            <div>
+            <h1>about me</h1>
+            </div>
+        </section>
+        <section id="project">
+            <div>
+                  <h1>my projects</h1>
+            </div>
+        </section>
+        <section id="contact">
+            <div>
+                   <h1>contact us</h1>
+            </div>
+         
+        </section>
+        
+        <section id="resume">
+            <div>
+            <h1>resume</h1>
+            </div>
+        </section>
+    </div>
+
+
+</body>
+
+</html>

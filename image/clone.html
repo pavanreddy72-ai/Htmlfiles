@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MyFlix - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .video-container {
+      display: none;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .video-container iframe {
+      width: 80%;
+      height: 400px;
+      border: none;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">MyFlix</div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">TV Shows</a></li>
+        <li><a href="#">Movies</a></li>
+        <li><a href="#">My List</a></li>
+        <li>
+          <select onchange="location = this.value;">
+            <option value="index.html">English</option>
+            <option value="index-es.html">Español</option>
+            <option value="index-fr.html">Français</option>
+          </select>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" style="background-image: url('https://image.tmdb.org/t/p/w1280/kmcqlZGaSh20zpTbuoF0Cdn07dT.jpg');">
+    <div class="hero-text">
+      <h1>Avatar (2009)</h1>
+      <p>Enter the world of Pandora in this epic sci-fi adventure.</p>
+      <button onclick="playTrailer('avatar')">Play</button>
+      <button class="secondary">More Info</button>
+    </div>
+  </section>
+
+  <!-- Trailer Video -->
+  <div class="video-container" id="videoContainer">
+    <iframe id="trailerFrame" src="" allowfullscreen></iframe>
+  </div>
+
+  <!-- Movie Grid -->
+  <section class="movie-section">
+    <h2>Popular Movies</h2>
+    <div class="movie-grid">
+      <div class="movie">
+        <a href="https://www.imdb.com/title/tt1375666/" target="_blank">
+          <img src="https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg" alt="Inception">
+        </a>
+      </div>
+      <div class="movie">
+        <a href="https://www.imdb.com/title/tt0499549/" target="_blank">
+          <img src="https://image.tmdb.org/t/p/w500/kmcqlZGaSh20zpTbuoF0Cdn07dT.jpg" alt="Avatar">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 MyFlix. All rights reserved.</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    function playTrailer(movie) {
+      const videoContainer = document.getElementById('videoContainer');
+      const trailerFrame = document.getElementById('trailerFrame');
+
+      // Set trailer URL based on movie
+      const trailers = {
+        'inception': 'https://www.youtube.com/embed/YoHD9XEInc0',
+        'avatar': 'https://www.youtube.com/embed/5PSNL1qE6VY'
+      };
+
+      trailerFrame.src = trailers[movie];
+      videoContainer.style.display = 'flex';
+      trailerFrame.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
+
